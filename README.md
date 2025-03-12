@@ -2,7 +2,7 @@
 
 MouseMinder is a simple utility that tracks your mouse position and allows you to restore it to a saved location with a hotkey. Perfect for screen recording, video editing, or any workflow where you need to return to specific screen positions quickly.
 
-<!-- ![MouseMinder UI](I have to upload the image on GitHub) -->
+![image](https://github.com/user-attachments/assets/d6467b4b-82d0-4d04-b9af-cd3c9a706373)
 
 ## Inspiration
 
