@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      
+
       - name: Get current version
         id: get-version
         run: |
@@ -39,7 +39,7 @@ jobs:
     needs: check-version
     if: needs.check-version.outputs.should_release == 'true'
     runs-on: ${{ matrix.os }}
-    
+
     strategy:
       matrix:
         include:
@@ -52,22 +52,22 @@ jobs:
           - os: macos-latest
             platform: macos
             extension: ''
-            
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-        
+
       - name: Install Linux dependencies
         if: matrix.platform == 'linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libxcb1-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libxcb-xinput-dev libx11-dev libdbus-1-dev pkg-config
-        
+          sudo apt-get install -y libxcb1-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libxcb-xinput-dev libx11-dev libdbus-1-dev pkg-config libxdo-dev
+
       - name: Build binary
         run: cargo build --release
-        
+
       - name: Rename binary with version and platform
         shell: bash
         run: |
@@ -77,13 +77,13 @@ jobs:
           else
             mv mouse_minder mouse_minder-${{ needs.check-version.outputs.version }}-${{ matrix.platform }}${{ matrix.extension }}
           fi
-          
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: binary-${{ matrix.platform }}
           path: target/release/mouse_minder-${{ needs.check-version.outputs.version }}-${{ matrix.platform }}${{ matrix.extension }}
-          
+
   create-release:
     needs: [check-version, build]
     runs-on: ubuntu-latest
@@ -92,7 +92,7 @@ jobs:
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
-        
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:

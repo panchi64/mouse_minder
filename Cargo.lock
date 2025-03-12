@@ -1803,7 +1803,7 @@ dependencies = [
 
 [[package]]
 name = "mouse_minder"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
  "device_query",
  "eframe",
