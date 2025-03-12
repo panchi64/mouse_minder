@@ -15,8 +15,9 @@ impl eframe::App for MouseMinderApp {
 fn main() -> Result<(), eframe::Error> {
     let options = NativeOptions {
         viewport: egui::ViewportBuilder::default()
-            .with_inner_size([400.0, 500.0])
-            .with_resizable(true),
+            .with_inner_size([360.0, 650.0])
+            .with_resizable(false)
+            .with_min_inner_size([360.0, 650.0]),
         ..Default::default()
     };
 

@@ -1802,8 +1802,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "mouse_position_tracker"
-version = "0.1.0"
+name = "mouse_minder"
+version = "1.0.0"
 dependencies = [
  "device_query",
  "eframe",
