@@ -1,4 +1,4 @@
-use egui::{Color32, Context, FontId, RichText, Stroke, Ui, Vec2, CornerRadius};
+use egui::{Color32, Context, RichText, Stroke, Ui, Vec2, CornerRadius};
 use std::sync::mpsc::{Receiver, channel};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
@@ -93,12 +93,12 @@ impl MouseMinderApp {
             .show(ui, |ui| {
                 ui.horizontal(|ui| {
                     // Draw a status circle
-                    let circle_radius = 8;
+                    let circle_radius = 8.0;
                     let circle_pos = ui.cursor().min + Vec2::new(circle_radius, circle_radius);
                     ui.painter()
                         .circle_filled(circle_pos, circle_radius, status_color);
                     ui.painter()
-                        .circle_stroke(circle_pos, circle_radius, Stroke::new(1, Color32::GRAY));
+                        .circle_stroke(circle_pos, circle_radius, Stroke::new(1.0, Color32::GRAY));
 
                     // Add some space then show the status text
                     ui.add_space(circle_radius * 2.5);
@@ -168,9 +168,9 @@ impl MouseMinderApp {
                                 egui::Frame::new()
                                     .fill(panel_bg)
                                     .corner_radius(CornerRadius::same(8))
-                                    .stroke(Stroke::new(1, Color32::from_rgb(230, 230, 240)))
+                                    .stroke(Stroke::new(1.0, Color32::from_rgb(230, 230, 240)))
                                     .shadow(egui::epaint::Shadow {
-                                        offset: egui::Vec2::new(0.0, 2.0),
+                                        offset: [0, 2],
                                         blur: 4,
                                         spread: 0,
                                         color: Color32::from_rgb(0, 0, 0).linear_multiply(0.1),
@@ -188,19 +188,10 @@ impl MouseMinderApp {
                                             if let Some(pos) = self.tracker.get_saved_position() {
                                                 // Coordinates
                                                 let coords_text = format!("X: {}, Y: {}", pos.x, pos.y);
-                                                let font_id = FontId::proportional(20.0);
-                                                let galley = ui.painter().layout_no_wrap(
-                                                    coords_text,
-                                                    font_id,
-                                                    text_color,
-                                                );
-                                                let text_rect = ui.allocate_exact_size(
-                                                    galley.size(),
-                                                    egui::Sense::hover(),
-                                                );
-                                                ui.painter().galley(
-                                                    text_rect.response.rect.left_top(),
-                                                    galley,
+                                                ui.label(
+                                                    RichText::new(coords_text)
+                                                        .size(20.0)
+                                                        .color(text_color)
                                                 );
 
                                                 ui.add_space(4.0);
@@ -272,7 +263,7 @@ impl MouseMinderApp {
                                             )
                                             .fill(track_button_color)
                                             .corner_radius(CornerRadius::same(6))
-                                            .min_size(egui::Vec2::new(180, 40));
+                                            .min_size(egui::Vec2::new(180.0, 40.0));
 
                                             if self.tracker.is_tracking() {
                                                 if ui.add(track_button).clicked() {
@@ -289,8 +280,8 @@ impl MouseMinderApp {
                                                 ui.with_layout(
                                                     egui::Layout::centered_and_justified(egui::Direction::LeftToRight),
                                                     |ui| {
-                                                        let button_height = 36;
-                                                        let button_width = 150;
+                                                        let button_height = 36.0;
+                                                        let button_width = 150.0;
 
                                                         // Reset button
                                                         let reset_button = egui::Button::new(
@@ -348,7 +339,7 @@ impl MouseMinderApp {
 
                                             // Add a subtle separator
                                             let separator_stroke = 
-                                                Stroke::new(1, Color32::from_rgb(220, 220, 230));
+                                                Stroke::new(1.0, Color32::from_rgb(220, 220, 230));
                                             let rect = ui.available_rect_before_wrap();
                                             let y = rect.min.y;
                                             let line_start = egui::Pos2::new(rect.min.x, y);
