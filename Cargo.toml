@@ -4,3 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+device_query = "3.0.1"
+eframe = "0.31.1"
+egui = "0.31.1"
+enigo = "0.3.0"
+global-hotkey = "0.6.4"
